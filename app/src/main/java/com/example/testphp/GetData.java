@@ -2,6 +2,9 @@ package com.example.testphp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import com.example.testphp1.R;
 
 public class GetData extends AppCompatActivity {
 
+    public String string;
     EditText editText;
     Button btn;
 
@@ -28,15 +32,9 @@ public class GetData extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String json = String.format("{\"id\":\"%s\"}", editText.getText());
-                String url = "http://192.168.1.22:80/tesPhp/show.php?details=" + json;
-                showData show = new showData(url);
-                show.execute();
-                String a = show.getString();
-                Log.d("TAG", "onClick: "+show.doInBackground());
-
-                Intent intent = new Intent(GetData.this, ShowJson.class);
-                intent.putExtra("key", a);
-                startActivity(intent);
+                String url = "http://192.168.1.24:80/tesPhp/show.php?details=" + json;
+                showData show = new showData(GetData.this, url);
+                show.execute(GetData.this);
             }
         });
     }
